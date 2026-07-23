@@ -5,28 +5,28 @@
 ## Architecture Diagram
 
 ```
-                 ┌─────────┐
-                 │  Start  │
-                 └────┬────┘
-                      │
-                 ┌────▼────┐
-            ┌───▶│ Planner │◀────────────────┐
-            │    └────┬────┘                 │
-            │         │                      │
-            │   needs more info?              │
-            │    /            \              │
-            │  yes             no            │
-            │   │               │            │
-      ┌─────▼──────┐      ┌─────▼─────┐      │
-      │ Researcher │      │ Responder │      │
-      └─────┬──────┘      └─────┬─────┘      │
-            │                   │            │
-            └───────────────────┼────────────┘
-           (loops back to Planner,      │
-            capped at 3 iterations)     │
-                                   ┌─────▼────┐
-                                   │   End    │
-                                   └──────────┘
+        +---------+
+        |  Start  |
+        +----+----+
+             |
+             v
+        +---------+
+   +--->| Planner |
+   |    +----+----+
+   |         |
+   |   needs more info?
+   |     /        \
+   |   yes         no
+   |    |           |
+   |    v           v
+   | +----------+ +-----------+
+   | |Researcher| | Responder |
+   | +----+-----+ +-----+-----+
+   |      |             |
+   +------+             v
+   (loop, max 3)   +---------+
+                    |   End   |
+                    +---------+
 ```
 
 The graph has three core nodes plus the implicit Start/End:
